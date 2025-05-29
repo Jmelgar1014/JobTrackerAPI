@@ -104,3 +104,4 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.pdb
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.genruntimeconfig.cache
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/ref/JobTrackerApi.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.sourcelink.json
