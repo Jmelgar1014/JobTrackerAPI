@@ -15,8 +15,18 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 36))));
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactLocalHost", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IApplicationsRepository, ApplicationsRepository>();
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddAutoMapper(typeof(ApplicationProfile));
 
@@ -27,7 +37,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseCors("AllowReactLocalHost");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
