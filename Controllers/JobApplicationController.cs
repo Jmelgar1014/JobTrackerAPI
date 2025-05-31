@@ -16,10 +16,28 @@ namespace JobTrackerApi.Controllers
         }
 
         [HttpPost]
-        public void InsertJob([FromBody]InsertJobDto job)
+        public ActionResult InsertJob([FromBody] InsertJobDto job)
         {
             _applicationsRepository.AddJob(job);
+
+            return Ok();
         }
+
+        [HttpGet]
+        public List<InsertJobDto> GetJobs()
+        {
+            return _applicationsRepository.GetJobs();
+
+        }
+
+        [HttpPut("{Id}")]
+        public ActionResult UpdateStatus(int Id, [FromBody] string status)
+        {
+            _applicationsRepository.UpdateApplication(Id, status);
+
+            return Ok();
+        }
+
 
         
     }

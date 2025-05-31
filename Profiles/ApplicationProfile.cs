@@ -10,5 +10,7 @@ public class ApplicationProfile : Profile
   public ApplicationProfile()
   {
     CreateMap<InsertJobDto, Applications>();
+    CreateMap<Applications, InsertJobDto>();
+    CreateMap<Applications, GetJobDto>();
   }
 }

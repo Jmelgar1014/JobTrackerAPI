@@ -1,15 +1,10 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobTrackerApi.Models;
+namespace JobTrackerApi.Dtos;
 
-public class Applications
+public class GetJobDto
 {
-  [Key]
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public int Id { get; set; }
-
   public required string JobTitle { get; set; }
 
   public required string Company { get; set; }
