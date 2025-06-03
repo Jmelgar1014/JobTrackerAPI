@@ -1,8 +1,11 @@
+using System.Text;
 using JobTrackerApi.Models;
 using JobTrackerApi.Profiles;
 using JobTrackerApi.Repositories.Implementations;
 using JobTrackerApi.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +13,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(jwtOptions =>
+{
+    jwtOptions.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Supabase:JwtSecret"])),
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Supabase:Url"],
+        ValidateAudience = true,
+        ValidAudience = "authenticated",
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+
+    };
+});
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection String is missing");
 
@@ -39,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("AllowReactLocalHost");
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
