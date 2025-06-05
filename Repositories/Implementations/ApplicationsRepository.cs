@@ -21,10 +21,10 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
     _dbContext.SaveChanges();
   }
 
-  public List<InsertJobDto> GetJobs()
+  public List<GetJobDto> GetJobs(string Id)
   {
-    var items = _dbContext.Applications.ToList();
-    List<InsertJobDto> jobs = _mapper.Map<List<InsertJobDto>>(items);
+    var items = _dbContext.Applications.Where(a => a.UserId == Id).ToList();
+    List<GetJobDto> jobs = _mapper.Map<List<GetJobDto>>(items);
 
     return jobs;
 

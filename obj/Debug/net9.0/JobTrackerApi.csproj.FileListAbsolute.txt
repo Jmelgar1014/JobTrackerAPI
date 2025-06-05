@@ -1,10 +1,3 @@
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.csproj.AssemblyReference.cache
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.GeneratedMSBuildEditorConfig.editorconfig
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.AssemblyInfoInputs.cache
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.AssemblyInfo.cs
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.csproj.CoreCompileInputs.cache
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.MvcApplicationPartsAssemblyInfo.cs
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.MvcApplicationPartsAssemblyInfo.cache
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/appsettings.Development.json
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/appsettings.json
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/JobTrackerApi.staticwebassets.endpoints.json
@@ -15,6 +8,7 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/JobTrackerApi.pdb
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/AutoMapper.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Humanizer.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
@@ -26,6 +20,12 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.OpenApi.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Mono.TextTemplating.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/MySqlConnector.dll
@@ -36,6 +36,7 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.Composition.Hosting.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.Composition.Runtime.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.Composition.TypedParts.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
@@ -88,6 +89,14 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.csproj.AssemblyReference.cache
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.GeneratedMSBuildEditorConfig.editorconfig
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.AssemblyInfoInputs.cache
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.AssemblyInfo.cs
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.csproj.CoreCompileInputs.cache
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.MvcApplicationPartsAssemblyInfo.cs
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.MvcApplicationPartsAssemblyInfo.cache
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.sourcelink.json
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/scopedcss/bundle/JobTrackerApi.styles.css
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/staticwebassets.build.json
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/staticwebassets.development.json
@@ -104,4 +113,3 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.pdb
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.genruntimeconfig.cache
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/ref/JobTrackerApi.dll
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.sourcelink.json

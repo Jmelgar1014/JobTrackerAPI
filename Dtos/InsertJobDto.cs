@@ -12,8 +12,7 @@ public class InsertJobDto
 
   public required string Salary { get; set; }
 
-  // public int UserId { get; set; }
-
+  public required string UserId { get; set; }
   // public required Users User { get; set; }
 
   public required string Status { get; set; }
