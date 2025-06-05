@@ -1,14 +1,14 @@
+using System.Security.Claims;
 using JobTrackerApi.Dtos;
 using JobTrackerApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobTrackerApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class JobApplicationController : ControllerBase
     {
         private readonly IApplicationsRepository _applicationsRepository;
@@ -21,14 +21,18 @@ namespace JobTrackerApi.Controllers
         public ActionResult InsertJob([FromBody] InsertJobDto job)
         {
             _applicationsRepository.AddJob(job);
+            // In your controller or middleware
+            Console.WriteLine($"Raw Auth Header: {Request.Headers["Authorization"]}");
 
-            return Ok();
+            return Ok("success");
         }
 
         [HttpGet]
-        public List<InsertJobDto> GetJobs()
+        public List<GetJobDto> GetJobs()
         {
-            return _applicationsRepository.GetJobs();
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
+                     ?? User.FindFirst("sub")?.Value;
+        return _applicationsRepository.GetJobs(userId);
 
         }
 
@@ -40,7 +44,13 @@ namespace JobTrackerApi.Controllers
             return Ok();
         }
 
+        
+    
+    
+}
 
 
-    }
+
+
+    
 }

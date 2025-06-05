@@ -1,35 +1,39 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
+
 using JobTrackerApi.Models;
 using JobTrackerApi.Profiles;
 using JobTrackerApi.Repositories.Implementations;
 using JobTrackerApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
+
+// using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
+IdentityModelEventSource.ShowPII = true;
+IdentityModelEventSource.LogCompleteSecurityArtifact = true;
 // Add services to the container.
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Supabase:JwtSecret"]!)),
+            ValidAudience = builder.Configuration["Supabase:ValidAudience"],
+            ValidIssuer = builder.Configuration["Supabase:ValidIssuer"]
+        };
+    });
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(jwtOptions =>
-{
-    jwtOptions.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Supabase:JwtSecret"])),
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["Supabase:Url"],
-        ValidateAudience = true,
-        ValidAudience = "authenticated",
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero
-
-    };
-});
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection String is missing");
 
@@ -42,7 +46,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
@@ -50,18 +55,19 @@ builder.Services.AddScoped<IApplicationsRepository, ApplicationsRepository>();
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddAutoMapper(typeof(ApplicationProfile));
 
-var app = builder.Build();
 
+
+var app = builder.Build();
+// Add this right after var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine($"Supabase URL: {builder.Configuration["Supabase:Url"]}");
+Console.WriteLine($"JWT Secret exists: {!string.IsNullOrEmpty(builder.Configuration["Supabase:JwtSecret"])}");
+Console.WriteLine($"Expected Issuer: {builder.Configuration["Supabase:Url"]}/auth/v1");
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+
 app.UseCors("AllowReactLocalHost");
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 

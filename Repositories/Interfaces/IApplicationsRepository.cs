@@ -9,7 +9,7 @@ public interface IApplicationsRepository
 {
   void AddJob(InsertJobDto job);
 
-  List<InsertJobDto> GetJobs();
+  List<GetJobDto> GetJobs(string Id);
 
   void UpdateApplication(int Id, string status);
 }
