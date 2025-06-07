@@ -12,4 +12,6 @@ public interface IApplicationsRepository
   List<GetJobDto> GetJobs(string Id);
 
   void UpdateApplication(int Id, string status);
+
+  void RemoveApplication(int Id);
 }

@@ -17,5 +17,5 @@ public class GetJobDto
 
   public required string Status { get; set; }
 
-  public DateTime AppliedAt { get; set; }
+  public required string AppliedAt { get; set; }
 }

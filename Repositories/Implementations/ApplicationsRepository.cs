@@ -28,7 +28,6 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
 
     return jobs;
 
-
   }
 
   public void UpdateApplication(int Id, string status)
@@ -44,6 +43,15 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
 
     _dbContext.SaveChanges();
 
+  }
+
+  public void RemoveApplication(int Id)
+  {
+    var application = _dbContext.Applications.Where(a => a.Id == Id).First();
+
+    _dbContext.Applications.Remove(application);
+
+    _dbContext.SaveChanges();
   }
 
 }

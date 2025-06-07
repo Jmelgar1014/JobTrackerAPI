@@ -12,5 +12,6 @@ public class ApplicationProfile : Profile
     CreateMap<InsertJobDto, Applications>();
     CreateMap<Applications, InsertJobDto>();
     CreateMap<Applications, GetJobDto>();
+    CreateMap<DeleteJobDto, Applications>();
   }
 }

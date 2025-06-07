@@ -30,9 +30,10 @@ namespace JobTrackerApi.Controllers
         [HttpGet]
         public List<GetJobDto> GetJobs()
         {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value 
-                     ?? User.FindFirst("sub")?.Value;
-        return _applicationsRepository.GetJobs(userId);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                         ?? User.FindFirst("sub")?.Value;
+            
+            return _applicationsRepository.GetJobs(userId);
 
         }
 
@@ -44,13 +45,12 @@ namespace JobTrackerApi.Controllers
             return Ok();
         }
 
-        
+        [HttpDelete("{Id}")]
+        public ActionResult DeleteApplication(int Id)
+        {
+            _applicationsRepository.RemoveApplication(Id);
+            return Ok("Successfully Removed");
+        }
     
-    
-}
-
-
-
-
-    
+    }
 }
