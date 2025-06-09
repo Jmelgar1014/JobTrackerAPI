@@ -37,8 +37,11 @@ builder.Services.AddControllers();
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection String is missing");
 
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 36))));
+    options.UseNpgsql(connectionString));
+
 
 builder.Services.AddCors(options =>
 {
@@ -65,17 +68,17 @@ Console.WriteLine($"Expected Issuer: {builder.Configuration["Supabase:Url"]}/aut
 // Configure the HTTP request pipeline.
 
 app.UseCors("AllowReactLocalHost");
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated(); // ✅ creates tables based on your models
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//     dbContext.Database.EnsureCreated(); // ✅ creates tables based on your models
+// }
 
 
 app.Run();
