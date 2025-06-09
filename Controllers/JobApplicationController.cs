@@ -28,13 +28,12 @@ namespace JobTrackerApi.Controllers
         }
 
         [HttpGet]
-        public List<GetJobDto> GetJobs()
+        public List<GetJobDto> GetAllJobs()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                          ?? User.FindFirst("sub")?.Value;
             
-            return _applicationsRepository.GetJobs(userId);
-
+            return _applicationsRepository.GetAllJobs(userId);  
         }
 
         [HttpPut("{Id}")]
