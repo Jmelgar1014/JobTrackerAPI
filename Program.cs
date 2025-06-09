@@ -22,7 +22,10 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.ListenAnyIP(8080); // Important for Fly.io
 });
-
+var connection = Environment.GetEnvironmentVariable("CONNECTIONSTRING_DEFAULTCONNECTION");
+var jwtIssuer = Environment.GetEnvironmentVariable("SUPABASE_VALIDISSUER");
+var jwtAudience = Environment.GetEnvironmentVariable("SUPABASE_VALIDAUDIENCE");
+var jwtSecret = Environment.GetEnvironmentVariable("SUPABASE_JWTSECRET");
 
 builder.Services.AddAuthorization();
 
@@ -31,9 +34,9 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         options.TokenValidationParameters = new TokenValidationParameters
         {
             
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Supabase:JwtSecret"]!)),
-            ValidAudience = builder.Configuration["Supabase:ValidAudience"],
-            ValidIssuer = builder.Configuration["Supabase:ValidIssuer"]
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret!)),
+            ValidAudience = jwtAudience,
+            ValidIssuer = jwtIssuer
         };
     });
 
@@ -47,7 +50,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connection));
 
 
 builder.Services.AddCors(options =>
