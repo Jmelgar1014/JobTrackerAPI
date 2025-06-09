@@ -17,6 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 IdentityModelEventSource.ShowPII = true;
 IdentityModelEventSource.LogCompleteSecurityArtifact = true;
 // Add services to the container.
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(8080); // Important for Fly.io
+});
+
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddAuthentication().AddJwtBearer(options =>
