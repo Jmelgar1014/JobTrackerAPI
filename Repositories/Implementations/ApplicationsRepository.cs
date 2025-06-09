@@ -21,13 +21,13 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
     _dbContext.SaveChanges();
   }
 
-  public List<GetJobDto> GetJobs(string Id)
+  public List<GetJobDto> GetAllJobs(string Id)
   {
-    var items = _dbContext.Applications.Where(a => a.UserId == Id).ToList();
+    var items = _dbContext.Applications.Where(a => a.UserId == Id).OrderByDescending(a => a.AppliedAt).ToList();
+
     List<GetJobDto> jobs = _mapper.Map<List<GetJobDto>>(items);
 
     return jobs;
-
   }
 
   public void UpdateApplication(int Id, string status)
