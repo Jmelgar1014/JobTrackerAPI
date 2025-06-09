@@ -75,7 +75,7 @@ Console.WriteLine($"Expected Issuer: {builder.Configuration["Supabase:Url"]}/aut
 // Configure the HTTP request pipeline.
 
 app.UseCors("AllowReactLocalHost");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
