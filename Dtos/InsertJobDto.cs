@@ -1,14 +1,10 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using JobTrackerApi.Models;
 
-namespace JobTrackerApi.Models;
+namespace JobTrackerApi.Dtos;
 
-public class Applications
+public class InsertJobDto
 {
-  [Key]
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-  public int Id { get; set; }
 
   public required string JobTitle { get; set; }
 
@@ -17,7 +13,6 @@ public class Applications
   public required string Salary { get; set; }
 
   public required string UserId { get; set; }
-
   // public required Users User { get; set; }
 
   public required string Status { get; set; }

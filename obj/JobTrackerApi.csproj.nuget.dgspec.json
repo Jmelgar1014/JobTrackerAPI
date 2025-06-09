@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[14.0.0, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.2, )"
@@ -68,9 +72,13 @@
               "target": "Package",
               "version": "[8.0.13, )"
             },
-            "Pomelo.EntityFrameworkCore.MySql": {
+            "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[9.0.0-preview.3.24172.9, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.11, )"
             }
           },
           "imports": [
