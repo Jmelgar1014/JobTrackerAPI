@@ -16,6 +16,8 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
   {
     Applications app = _mapper.Map<Applications>(job);
 
+    app.AppliedAt = DateTime.SpecifyKind(app.AppliedAt, DateTimeKind.Utc);
+    
     _dbContext.Applications.Add(app);
 
     _dbContext.SaveChanges();

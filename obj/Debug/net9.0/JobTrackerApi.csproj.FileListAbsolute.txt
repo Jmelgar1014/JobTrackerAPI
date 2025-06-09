@@ -28,8 +28,6 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Microsoft.OpenApi.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Mono.TextTemplating.dll
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/MySqlConnector.dll
-/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Pomelo.EntityFrameworkCore.MySql.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.CodeDom.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.Composition.AttributedModel.dll
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/System.Composition.Convention.dll
@@ -113,3 +111,5 @@
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.pdb
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/JobTrackerApi.genruntimeconfig.cache
 /Users/josemelgar/Desktop/Projects/JobTrackerApi/obj/Debug/net9.0/ref/JobTrackerApi.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Npgsql.dll
+/Users/josemelgar/Desktop/Projects/JobTrackerApi/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
