@@ -57,7 +57,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactLocalHost", policy =>
     {
-        policy.WithOrigins("https://apptracking.netlify.app")
+        policy.WithOrigins("https://apptracking.netlify.app","http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
