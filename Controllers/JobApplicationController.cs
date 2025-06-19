@@ -3,6 +3,7 @@ using JobTrackerApi.Dtos;
 using JobTrackerApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace JobTrackerApi.Controllers
 {
@@ -32,8 +33,8 @@ namespace JobTrackerApi.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                          ?? User.FindFirst("sub")?.Value;
-            
-            return _applicationsRepository.GetAllJobs(userId);  
+
+            return _applicationsRepository.GetAllJobs(userId);
         }
 
         [HttpPut("{Id}")]
@@ -50,6 +51,6 @@ namespace JobTrackerApi.Controllers
             _applicationsRepository.RemoveApplication(Id);
             return Ok("Successfully Removed");
         }
-    
+
     }
 }

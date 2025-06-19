@@ -1,7 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
-
+using System.Threading.RateLimiting;
 using JobTrackerApi.Models;
 using JobTrackerApi.Profiles;
 using JobTrackerApi.Repositories.Implementations;
@@ -68,7 +69,19 @@ builder.Services.AddScoped<IApplicationsRepository, ApplicationsRepository>();
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddAutoMapper(typeof(ApplicationProfile));
 
-
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 10,
+                QueueLimit = 0,
+                Window = TimeSpan.FromMinutes(1)
+            }));
+});
 
 var app = builder.Build();
 // Add this right after var builder = WebApplication.CreateBuilder(args);
@@ -78,6 +91,7 @@ Console.WriteLine($"Expected Issuer: {builder.Configuration["Supabase:Url"]}/aut
 // Configure the HTTP request pipeline.
 
 app.UseCors("AllowReactLocalHost");
+app.UseRateLimiter();
 //app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
