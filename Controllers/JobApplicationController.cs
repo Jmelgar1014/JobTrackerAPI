@@ -3,7 +3,6 @@ using JobTrackerApi.Dtos;
 using JobTrackerApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace JobTrackerApi.Controllers
 {
@@ -18,38 +17,36 @@ namespace JobTrackerApi.Controllers
             _applicationsRepository = applicationsRepository;
         }
 
-        [HttpPost]
-        public ActionResult InsertJob([FromBody] InsertJobDto job)
-        {
-            _applicationsRepository.AddJob(job);
-            // In your controller or middleware
-            Console.WriteLine($"Raw Auth Header: {Request.Headers["Authorization"]}");
+        private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("sub")?.Value ?? throw new UnauthorizedAccessException();
 
-            return Ok("success");
+        [HttpPost]
+        public async Task<ActionResult<GetJobDto>> InsertJob([FromBody] InsertJobDto job)
+        {
+            var created = await _applicationsRepository.AddJob(job, GetUserId());
+            // In your controller or middleware
+
+            return CreatedAtAction(nameof(GetAllJobs),created);
         }
 
         [HttpGet]
-        public List<GetJobDto> GetAllJobs()
+        public async Task<ActionResult<List<GetJobDto>>> GetAllJobs()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                         ?? User.FindFirst("sub")?.Value;
-
-            return _applicationsRepository.GetAllJobs(userId);
+            return await _applicationsRepository.GetAllJobs(GetUserId());
         }
 
-        [HttpPut("{Id}")]
-        public ActionResult UpdateStatus(int Id, [FromBody] string status)
+        [HttpPut("{Id:int}")]
+        public async Task<IActionResult> UpdateStatus(int Id, [FromBody] string status)
         {
-            _applicationsRepository.UpdateApplication(Id, status);
+            var updated = await _applicationsRepository.UpdateApplication(Id, status,GetUserId());
 
-            return Ok();
+            return updated ? NoContent() : NotFound();
         }
 
-        [HttpDelete("{Id}")]
-        public ActionResult DeleteApplication(int Id)
+        [HttpDelete("{Id:int}")]
+        public async Task<IActionResult> DeleteApplication(int Id)
         {
-            _applicationsRepository.RemoveApplication(Id);
-            return Ok("Successfully Removed");
+            var deleted = await _applicationsRepository.RemoveApplication(Id,GetUserId());
+            return deleted ? NoContent() : NotFound();
         }
 
     }

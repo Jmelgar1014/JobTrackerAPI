@@ -1,18 +1,16 @@
 using System;
-using System.Reflection;
 using JobTrackerApi.Dtos;
-using JobTrackerApi.Models;
 
 namespace JobTrackerApi.Repositories.Interfaces;
 
 public interface IApplicationsRepository
 {
-  void AddJob(InsertJobDto job);
+  Task<GetJobDto> AddJob(InsertJobDto job, string userId);
 
 
-  void UpdateApplication(int Id, string status);
+  Task<bool> UpdateApplication(int Id, string status, string userId);
 
-  void RemoveApplication(int Id);
+  Task<bool> RemoveApplication(int Id, string userId);
 
-  List<GetJobDto> GetAllJobs(string Id);
+  Task<List<GetJobDto>> GetAllJobs( string userId);
 }

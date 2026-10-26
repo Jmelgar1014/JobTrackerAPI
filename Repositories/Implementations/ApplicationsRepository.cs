@@ -3,6 +3,7 @@ using AutoMapper;
 using JobTrackerApi.Dtos;
 using JobTrackerApi.Models;
 using JobTrackerApi.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobTrackerApi.Repositories.Implementations;
 
@@ -12,48 +13,55 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
 
   private readonly IMapper _mapper = mapper;
 
-  public void AddJob(InsertJobDto job)
+  public async Task<GetJobDto> AddJob(InsertJobDto job, string userId)
   {
     Applications app = _mapper.Map<Applications>(job);
+
+    app.UserId = userId;
 
     app.AppliedAt = DateTime.SpecifyKind(app.AppliedAt, DateTimeKind.Utc);
     
     _dbContext.Applications.Add(app);
 
-    _dbContext.SaveChanges();
+    await _dbContext.SaveChangesAsync();
+
+    return _mapper.Map<GetJobDto>(app);
   }
 
-  public List<GetJobDto> GetAllJobs(string Id)
+  public async Task<List<GetJobDto>>  GetAllJobs( string userId)
   {
-    var items = _dbContext.Applications.Where(a => a.UserId == Id).OrderByDescending(a => a.AppliedAt).ToList();
+    var items = await _dbContext.Applications.Where(a => a.UserId == userId).OrderByDescending(a => a.AppliedAt).ToListAsync();
 
     List<GetJobDto> jobs = _mapper.Map<List<GetJobDto>>(items);
 
     return jobs;
   }
 
-  public void UpdateApplication(int Id, string status)
+  public async Task<bool> UpdateApplication(int Id, string status, string userId)
   {
-    var app = _dbContext.Applications.Where(a => a.Id == Id).First();
+    var app = await _dbContext.Applications.FirstOrDefaultAsync(a => a.Id == Id && a.UserId == userId);
 
-    if (app == null)
-    {
-      throw new Exception($"Application with Id {Id}: not found ");
-    }
+    if (app is null) return false;
 
     app.Status = status;
 
-    _dbContext.SaveChanges();
+    await _dbContext.SaveChangesAsync();
+
+    return true;
 
   }
 
-  public void RemoveApplication(int Id)
+  public async Task<bool> RemoveApplication(int Id, string userId)
   {
-    var application = _dbContext.Applications.Where(a => a.Id == Id).First();
+    var app = await _dbContext.Applications.FirstOrDefaultAsync(a => a.Id == Id && a.UserId == userId);
 
-    _dbContext.Applications.Remove(application);
+    if(app is null) return false;
 
-    _dbContext.SaveChanges();
+    _dbContext.Applications.Remove(app);
+
+    await _dbContext.SaveChangesAsync();
+
+    return true;
   }
 
 }

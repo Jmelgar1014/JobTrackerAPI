@@ -10,13 +10,16 @@ using JobTrackerApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
-
-// using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
-IdentityModelEventSource.ShowPII = true;
-IdentityModelEventSource.LogCompleteSecurityArtifact = true;
+if(builder.Environment.IsDevelopment())
+{
+    IdentityModelEventSource.ShowPII = true;
+
+    IdentityModelEventSource.LogCompleteSecurityArtifact = true;
+}
 // Add services to the container.
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -44,12 +47,6 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
-
-
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection String is missing");
-
-
-
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connection));
 
@@ -71,23 +68,20 @@ builder.Services.AddAutoMapper(typeof(ApplicationProfile));
 
 builder.Services.AddRateLimiter(options =>
 {
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
         RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+            partitionKey: httpContext.Request.Headers["Fly-Client-IP"].FirstOrDefault() ?? httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
             factory: partition => new FixedWindowRateLimiterOptions
             {
-                AutoReplenishment = true,
-                PermitLimit = 10,
+                PermitLimit = 100,
                 QueueLimit = 0,
                 Window = TimeSpan.FromMinutes(1)
             }));
 });
 
 var app = builder.Build();
-// Add this right after var builder = WebApplication.CreateBuilder(args);
-Console.WriteLine($"Supabase URL: {builder.Configuration["Supabase:Url"]}");
-Console.WriteLine($"JWT Secret exists: {!string.IsNullOrEmpty(builder.Configuration["Supabase:JwtSecret"])}");
-Console.WriteLine($"Expected Issuer: {builder.Configuration["Supabase:Url"]}/auth/v1");
 // Configure the HTTP request pipeline.
 
 app.UseCors("AllowReactLocalHost");
