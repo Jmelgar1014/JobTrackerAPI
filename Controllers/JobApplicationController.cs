@@ -34,6 +34,14 @@ namespace JobTrackerApi.Controllers
             return await _applicationsRepository.GetAllJobs(GetUserId());
         }
 
+        [HttpGet("{Id:int}")]
+        public async Task<ActionResult<GetJobDto>> GetJob(int Id)
+        {
+            var job = await _applicationsRepository.GetJob(GetUserId(), Id);
+
+            return job;
+        }
+
         [HttpPut("{Id:int}")]
         public async Task<IActionResult> UpdateStatus(int Id, [FromBody] string status)
         {

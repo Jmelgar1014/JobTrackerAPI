@@ -13,4 +13,6 @@ public interface IApplicationsRepository
   Task<bool> RemoveApplication(int Id, string userId);
 
   Task<List<GetJobDto>> GetAllJobs( string userId);
+
+  Task<GetJobDto> GetJob(string userId, int id);
 }

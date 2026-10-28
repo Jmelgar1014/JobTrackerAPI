@@ -14,5 +14,7 @@ public class InsertJobDto
 
   public required string Status { get; set; }
 
+  public string JobDescription {get; set;} = string.Empty;
+
   public DateTime AppliedAt { get; set; }
 }

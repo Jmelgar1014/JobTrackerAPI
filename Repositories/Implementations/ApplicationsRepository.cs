@@ -3,6 +3,7 @@ using AutoMapper;
 using JobTrackerApi.Dtos;
 using JobTrackerApi.Models;
 using JobTrackerApi.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobTrackerApi.Repositories.Implementations;
@@ -35,6 +36,15 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
     List<GetJobDto> jobs = _mapper.Map<List<GetJobDto>>(items);
 
     return jobs;
+  }
+
+  public async Task<GetJobDto> GetJob(string userId, int id)
+  {
+    var item = await _dbContext.Applications.Where(a => a.UserId == userId && a.Id == id).FirstAsync();
+
+    GetJobDto job = _mapper.Map<GetJobDto>(item);
+
+    return job;
   }
 
   public async Task<bool> UpdateApplication(int Id, string status, string userId)

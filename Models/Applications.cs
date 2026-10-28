@@ -18,9 +18,9 @@ public class Applications
 
   public required string UserId { get; set; }
 
-  // public required Users User { get; set; }
-
   public required string Status { get; set; }
+
+  public string JobDescription {get; set;} = string.Empty;
 
   public DateTime AppliedAt { get; set; }
 }

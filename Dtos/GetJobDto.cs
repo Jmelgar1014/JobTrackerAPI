@@ -13,9 +13,9 @@ public class GetJobDto
 
   public required string UserId { get; set; }
 
-  // public required Users User { get; set; }
-
   public required string Status { get; set; }
+
+  public string JobDescription {get; set;} = string.Empty;
 
   public required string AppliedAt { get; set; }
 }
