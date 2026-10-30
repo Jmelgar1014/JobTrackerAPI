@@ -45,7 +45,7 @@ namespace JobTrackerApi.Controllers
         [HttpPut("{Id:int}")]
         public async Task<IActionResult> UpdateStatus(int Id, [FromBody] string status)
         {
-            var updated = await _applicationsRepository.UpdateApplication(Id, status,GetUserId());
+            var updated = await _applicationsRepository.UpdateStatus(Id, status,GetUserId());
 
             return updated ? NoContent() : NotFound();
         }
@@ -55,6 +55,16 @@ namespace JobTrackerApi.Controllers
         {
             var deleted = await _applicationsRepository.RemoveApplication(Id,GetUserId());
             return deleted ? NoContent() : NotFound();
+        }
+
+        [HttpPatch("{Id:int}")]
+        public async Task<IActionResult> UpdateApplication(int Id, [FromBody] UpdateJobDto changes)
+        {
+            var updated = await _applicationsRepository.UpdateApplication(GetUserId(), changes, Id);
+
+            if(!updated) return NotFound();
+
+            return NoContent();
         }
 
     }

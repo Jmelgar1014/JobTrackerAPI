@@ -47,7 +47,7 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
     return job;
   }
 
-  public async Task<bool> UpdateApplication(int Id, string status, string userId)
+  public async Task<bool> UpdateStatus(int Id, string status, string userId)
   {
     var app = await _dbContext.Applications.FirstOrDefaultAsync(a => a.Id == Id && a.UserId == userId);
 
@@ -59,6 +59,19 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
 
     return true;
 
+  }
+
+  public async Task<bool> UpdateApplication(string userId, UpdateJobDto changes, int id)
+  {
+    var item = await _dbContext.Applications.FirstOrDefaultAsync(a => a.UserId == userId && a.Id == id);
+
+    if(item == null) return false;
+
+    _mapper.Map(changes, item);
+
+    await _dbContext.SaveChangesAsync();
+
+    return true;
   }
 
   public async Task<bool> RemoveApplication(int Id, string userId)
