@@ -17,5 +17,7 @@ public class GetJobDto
 
   public string JobDescription {get; set;} = string.Empty;
 
+  public required string Location {get; set;}
+
   public required string AppliedAt { get; set; }
 }

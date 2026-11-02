@@ -14,3 +14,4 @@ public class ApplicationProfile : Profile
     CreateMap<UpdateJobDto, Applications>().ForAllMembers(opts => opts.Condition((src,dest,srcMember) => srcMember != null));
   }
 }
+

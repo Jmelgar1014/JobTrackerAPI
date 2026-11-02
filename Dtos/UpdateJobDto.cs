@@ -8,6 +8,8 @@ public class UpdateJobDto
   public string? Salary { get; set; }
   public string? Status { get; set; }
   public string? JobDescription { get; set; }
+
+  public string? Location {get;set;}
 }
 
 

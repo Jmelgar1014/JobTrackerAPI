@@ -45,6 +45,10 @@ namespace JobTrackerApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Salary")
                         .IsRequired()
                         .HasColumnType("text");
