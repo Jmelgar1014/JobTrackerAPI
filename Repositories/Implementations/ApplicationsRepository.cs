@@ -29,13 +29,28 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
     return _mapper.Map<GetJobDto>(app);
   }
 
-  public async Task<List<GetJobDto>>  GetAllJobs( string userId)
+  public async Task<ResponseMetaData<GetJobDto>>  GetAllJobs( string userId, int page, int pageSize, string? status)
   {
-    var items = await _dbContext.Applications.Where(a => a.UserId == userId).OrderByDescending(a => a.AppliedAt).ToListAsync();
+    var query = _dbContext.Applications.Where(a => a.UserId == userId);
+
+    if(!string.IsNullOrEmpty(status))
+    {
+      query = query.Where(a => a.Status == status);
+    }
+
+    var items = await query.OrderByDescending(a => a.AppliedAt).ThenByDescending(a => a.Id).Skip((page -1) * pageSize).Take(pageSize).ToListAsync();
 
     List<GetJobDto> jobs = _mapper.Map<List<GetJobDto>>(items);
 
-    return jobs;
+    int totalCount = await query.CountAsync();
+
+    ResponseMetaData<GetJobDto> response = new ResponseMetaData<GetJobDto>{
+      Items = jobs,
+      Page = page,
+      PageSize = pageSize,
+      TotalCount = totalCount,
+    };
+    return response;
   }
 
   public async Task<GetJobDto> GetJob(string userId, int id)

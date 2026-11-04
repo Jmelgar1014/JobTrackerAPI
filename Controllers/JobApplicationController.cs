@@ -1,5 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using JobTrackerApi.Dtos;
+using JobTrackerApi.Models;
 using JobTrackerApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,9 +31,9 @@ namespace JobTrackerApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GetJobDto>>> GetAllJobs()
+        public async Task<ActionResult<ResponseMetaData<GetJobDto>>> GetAllJobs([FromQuery, Range(1,int.MaxValue)] int page = 1, [FromQuery, Range(1, 60)] int pageSize = 20, [FromQuery, AllowedValues("applied", "interview", "rejected", "offer", null)] string? status = null)
         {
-            return await _applicationsRepository.GetAllJobs(GetUserId());
+            return await _applicationsRepository.GetAllJobs(GetUserId(), page,pageSize, status);
         }
 
         [HttpGet("{Id:int}")]

@@ -1,7 +1,42 @@
-@JobTrackerApi_HostAddress = http://localhost:5195
+@JobTrackerApi_HostAddress = http://localhost:8080
 @AccessToken = eyJhbGciOiJIUzI1NiIsImtpZCI6ImdLd3BReVk3cE5iOC8wejQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2Z4aGNwb2l1bW5tb3ZkZHNoZm11LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiIxYjU1NDdmZS03YmNlLTQxNWYtODcwMC02OTZmYzZkMGU0ODYiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzQ5MDU4MzM4LCJpYXQiOjE3NDkwNTQ3MzgsImVtYWlsIjoiam1lbGdhcjQyMEBnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc0OTAxMjMxOX1dLCJzZXNzaW9uX2lkIjoiNzdiZTRiZWItMGY0MC00NDY1LWE3MjMtNmQ2YTY2MDA4ZjUyIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.BJoouJTztCZo2XyqxafKD-XsChl5nPnrwDZx8F-V0E
 
 GET {{JobTrackerApi_HostAddress}}/api/jobapplication
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+# Pagination: first page of 5
+GET {{JobTrackerApi_HostAddress}}/api/jobapplication?page=1&pageSize=5
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+# Pagination: second page of 5 (should not overlap with page 1)
+GET {{JobTrackerApi_HostAddress}}/api/jobapplication?page=2&pageSize=5
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+# Pagination: page past the end (expect empty items, hasNextPage=false)
+GET {{JobTrackerApi_HostAddress}}/api/jobapplication?page=999&pageSize=5
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+# Validation: page=0 (expect 400)
+GET {{JobTrackerApi_HostAddress}}/api/jobapplication?page=0
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+
+###
+
+# Validation: pageSize over 60 (expect 400)
+GET {{JobTrackerApi_HostAddress}}/api/jobapplication?pageSize=61
 Accept: application/json
 Authorization: Bearer {{AccessToken}}
 

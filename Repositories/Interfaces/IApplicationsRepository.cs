@@ -1,5 +1,6 @@
 using System;
 using JobTrackerApi.Dtos;
+using JobTrackerApi.Models;
 
 namespace JobTrackerApi.Repositories.Interfaces;
 
@@ -12,7 +13,7 @@ public interface IApplicationsRepository
 
   Task<bool> RemoveApplication(int Id, string userId);
 
-  Task<List<GetJobDto>> GetAllJobs( string userId);
+  Task<ResponseMetaData<GetJobDto>> GetAllJobs( string userId, int page, int pageSize, string? status);
 
   Task<GetJobDto> GetJob(string userId, int id);
 
