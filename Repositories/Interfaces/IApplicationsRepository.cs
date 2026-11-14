@@ -8,7 +8,6 @@ public interface IApplicationsRepository
 {
   Task<GetJobDto> AddJob(InsertJobDto job, string userId);
 
-
   Task<bool> UpdateStatus(int Id, string status, string userId);
 
   Task<bool> RemoveApplication(int Id, string userId);
@@ -18,4 +17,6 @@ public interface IApplicationsRepository
   Task<GetJobDto> GetJob(string userId, int id);
 
   Task<bool> UpdateApplication(string userId, UpdateJobDto changes, int id );
+
+  Task<GetJobCountsDto> GetJobStats(string userId);
 }

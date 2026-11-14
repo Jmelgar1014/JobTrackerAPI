@@ -3,7 +3,6 @@ using AutoMapper;
 using JobTrackerApi.Dtos;
 using JobTrackerApi.Models;
 using JobTrackerApi.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobTrackerApi.Repositories.Implementations;
@@ -13,6 +12,21 @@ public class ApplicationsRepository(AppDbContext dbContext, IMapper mapper) : IA
   private readonly AppDbContext _dbContext = dbContext;
 
   private readonly IMapper _mapper = mapper;
+
+  public async Task<GetJobCountsDto> GetJobStats(string userId)
+  {
+    var items = await _dbContext.Applications.Where(a => a.UserId == userId).GroupBy(a => a.Status).Select(g => new {Status = g.Key, Count = g.Count()}).ToDictionaryAsync(x => x.Status, x=> x.Count);
+
+    
+    return new GetJobCountsDto
+    {
+      Applied = items.GetValueOrDefault("applied"),
+      Interviews = items.GetValueOrDefault("interview"),
+      Offers = items.GetValueOrDefault("offer"),
+      Rejected = items.GetValueOrDefault("rejected"),
+      Total = items.Values.Sum(),
+    };
+  }
 
   public async Task<GetJobDto> AddJob(InsertJobDto job, string userId)
   {

@@ -21,6 +21,12 @@ namespace JobTrackerApi.Controllers
 
         private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("sub")?.Value ?? throw new UnauthorizedAccessException();
 
+        [HttpGet("stats")]
+        public async Task<GetJobCountsDto> GetJobStats()
+        {
+            return await _applicationsRepository.GetJobStats(GetUserId());    
+        }
+
         [HttpPost]
         public async Task<ActionResult<GetJobDto>> InsertJob([FromBody] InsertJobDto job)
         {
