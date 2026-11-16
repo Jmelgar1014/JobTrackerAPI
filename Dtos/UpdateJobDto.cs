@@ -9,6 +9,8 @@ public class UpdateJobDto
   public string? Status { get; set; }
   public string? JobDescription { get; set; }
 
+  public DateTime? AppliedAt {get; set;}
+
   public string? Location {get;set;}
 }
 
