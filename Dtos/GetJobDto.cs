@@ -19,5 +19,5 @@ public class GetJobDto
 
   public required string Location {get; set;}
 
-  public required string AppliedAt { get; set; }
+  public required DateTime AppliedAt { get; set; }
 }
